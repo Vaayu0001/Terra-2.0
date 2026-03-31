@@ -8,7 +8,7 @@ REPORTS_DIR.mkdir(exist_ok=True)
 
 APP_NAME = "Terra 2.0"
 APP_TAGLINE = "Your planet needs a glow-up. Start here."
-GEMINI_API_KEY = "AIzaSyBw_JIgZX6BVHonAuK0CEtgxer3qOfCSbs"  # Get yours free at https://aistudio.google.com
+GEMINI_API_KEY = ""  # Get yours free at https://aistudio.google.com
 DEFAULT_CITY = "Chennai"
 DEFAULT_LAT = 13.0827
 DEFAULT_LON = 80.2707
