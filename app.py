@@ -344,36 +344,44 @@ def route_page():
     """Route to the appropriate page based on session state."""
     page = st.session_state.get("page", "home")
 
-    if page == "home":
-        from ui.pages.home import show
-        show()
-    elif page == "carbon":
-        from ui.pages.carbon import show
-        show()
-    elif page == "roast":
-        from ui.pages.roast import show
-        show()
-    elif page == "swipe":
-        from ui.pages.swipe import show
-        show()
-    elif page == "leaderboard":
-        from ui.pages.leaderboard_page import show
-        show()
-    elif page == "meme":
-        from ui.pages.meme import show
-        show()
-    elif page == "eco_score":
-        from ui.pages.eco_score_page import show
-        show()
-    elif page == "waste":
-        from ui.pages.waste import show
-        show()
-    elif page == "profile":
-        from ui.pages.profile import show
-        show()
-    else:
-        from ui.pages.home import show
-        show()
+    try:
+        if page == "home":
+            from ui.pages.home import show
+            show()
+        elif page == "carbon":
+            from ui.pages.carbon import show
+            show()
+        elif page == "roast":
+            from ui.pages.roast import show
+            show()
+        elif page == "swipe":
+            from ui.pages.swipe import show
+            show()
+        elif page == "leaderboard":
+            from ui.pages.leaderboard_page import show
+            show()
+        elif page == "meme":
+            from ui.pages.meme import show
+            show()
+        elif page == "eco_score":
+            from ui.pages.eco_score_page import show
+            show()
+        elif page == "waste":
+            from ui.pages.waste import show
+            show()
+        elif page == "profile":
+            from ui.pages.profile import show
+            show()
+        elif page == "login":
+            show_auth_page()
+        else:
+            from ui.pages.home import show
+            show()
+    except Exception as e:
+        st.error(f"Error loading page: {str(e)}")
+        st.info("Returning to home page...")
+        st.session_state["page"] = "home"
+        st.rerun()
 
 
 # ═══════ MAIN ═══════
