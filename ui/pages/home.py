@@ -75,21 +75,20 @@ def show():
 
     # ═══════ Welcome Hero ═══════
     st.markdown(f"""
-    <div class="terra-card-glow" style="text-align: center; padding: 2rem;">
-        <div style="font-size: 3.5rem; margin-bottom: 0.5rem;">🌍</div>
+    <div class="terra-card-glow" style="text-align: center; padding: 2rem; margin-bottom: 1.5rem;">
+        <div style="font-size: 3.5rem; margin-bottom: 0.5rem;">🌿</div>
         <h1 style="
             font-size: 2rem;
             margin: 0;
-            background: linear-gradient(135deg, #2ECC71, #7EC8E3);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #3D7A5E;
+            font-weight: 800;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         ">Welcome back, {username}! 👋</h1>
-        <p style="color: #7EC8E3; margin-top: 0.5rem; font-size: 1.1rem;">
-            Level {level} — {level_info['name']} • {xp} XP
+        <p style="color: #6BAF8A; margin-top: 0.5rem; font-size: 1rem; font-weight: 600;">
+            Level {level} · {level_info['name']} · {xp} XP
         </p>
-        <p style="color: rgba(245, 240, 232, 0.6); font-size: 0.85rem; margin-top: 0.3rem;">
-            Your planet needs a glow-up. Start here. 🌱
+        <p style="color: #9A9A9A; font-size: 0.85rem; margin-top: 0.3rem;">
+            Your planet. Your impact. Let's make a difference together. 🌱
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -103,25 +102,25 @@ def show():
         try:
             aqi_data = ClimateAPI.get_aqi(DEFAULT_LAT, DEFAULT_LON)
             st.markdown(f"""
-            <div class="terra-card" style="text-align: center;">
-                <div style="font-size: 0.8rem; color: #7EC8E3; margin-bottom: 0.3rem;">
-                    🏙️ Air Quality — {DEFAULT_CITY}
+            <div class="terra-card" style="text-align: center; padding: 20px;">
+                <div style="font-size: 13px; color: #5C5C5C; margin-bottom: 8px; font-weight: 600;">
+                    🏙️ AIR QUALITY — {DEFAULT_CITY}
                 </div>
-                <div style="font-size: 2.5rem; font-weight: 700; color: {aqi_data['color']};">
+                <div style="font-size: 2.5rem; font-weight: 700; color: {aqi_data['color']}; margin: 8px 0;">
                     {aqi_data['emoji']} {aqi_data['aqi']}
                 </div>
-                <div style="color: {aqi_data['color']}; font-weight: 600; font-size: 1rem;">
+                <div style="color: {aqi_data['color']}; font-weight: 700; font-size: 1rem; margin-bottom: 8px;">
                     {aqi_data['category']}
                 </div>
-                <div style="color: rgba(245, 240, 232, 0.6); font-size: 0.75rem; margin-top: 0.3rem;">
-                    PM2.5: {aqi_data['pm2_5']} µg/m³ • PM10: {aqi_data['pm10']} µg/m³
+                <div style="color: #9A9A9A; font-size: 0.75rem; line-height: 1.5;">
+                    PM2.5: {aqi_data['pm2_5']} µg/m³<br>PM10: {aqi_data['pm10']} µg/m³
                 </div>
             </div>
             """, unsafe_allow_html=True)
         except (ValueError, KeyError):
             st.markdown("""
-            <div class="terra-card" style="text-align: center;">
-                <div style="color: #7EC8E3;">🏙️ AQI data unavailable</div>
+            <div class="terra-card" style="text-align: center; color: #5C5C5C;">
+                🏙️ AQI data unavailable
             </div>
             """, unsafe_allow_html=True)
 
@@ -129,25 +128,25 @@ def show():
         try:
             weather_data = ClimateAPI.get_weather(DEFAULT_LAT, DEFAULT_LON)
             st.markdown(f"""
-            <div class="terra-card" style="text-align: center;">
-                <div style="font-size: 0.8rem; color: #7EC8E3; margin-bottom: 0.3rem;">
-                    🌡️ Weather — {DEFAULT_CITY}
+            <div class="terra-card" style="text-align: center; padding: 20px;">
+                <div style="font-size: 13px; color: #5C5C5C; margin-bottom: 8px; font-weight: 600;">
+                    🌡️ WEATHER — {DEFAULT_CITY}
                 </div>
-                <div style="font-size: 2.5rem; font-weight: 700; color: #F4C430;">
+                <div style="font-size: 2.5rem; font-weight: 700; color: #D4A853; margin: 8px 0;">
                     {weather_data['emoji']} {weather_data['temperature']}°C
                 </div>
-                <div style="color: #F5F0E8; font-weight: 600; font-size: 1rem;">
+                <div style="color: #2C2C2C; font-weight: 700; font-size: 1rem; margin-bottom: 8px;">
                     {weather_data['description']}
                 </div>
-                <div style="color: rgba(245, 240, 232, 0.6); font-size: 0.75rem; margin-top: 0.3rem;">
-                    💧 {weather_data['humidity']}% humidity • 💨 {weather_data['wind_speed']} km/h
+                <div style="color: #9A9A9A; font-size: 0.75rem; line-height: 1.5;">
+                    💧 {weather_data['humidity']}% humidity<br>💨 {weather_data['wind_speed']} km/h
                 </div>
             </div>
             """, unsafe_allow_html=True)
         except (ValueError, KeyError):
             st.markdown("""
-            <div class="terra-card" style="text-align: center;">
-                <div style="color: #7EC8E3;">🌡️ Weather data unavailable</div>
+            <div class="terra-card" style="text-align: center; color: #5C5C5C;">
+                🌡️ Weather data unavailable
             </div>
             """, unsafe_allow_html=True)
 
@@ -183,7 +182,7 @@ def show():
 
     # ═══════ Navigation Grid ═══════
     st.markdown("""
-    <h3 style="text-align: center; color: #7EC8E3; margin-bottom: 1rem;">
+    <h3 style="text-align: center; color: #3D7A5E; margin-bottom: 1.5rem; font-weight: 800; font-size: 1.3rem; font-family: 'Plus Jakarta Sans', sans-serif;">
         🧭 Explore Terra 2.0
     </h3>
     """, unsafe_allow_html=True)
@@ -212,8 +211,8 @@ def show():
                         st.session_state["page"] = page_key
                         st.rerun()
                     st.markdown(f"""
-                    <p style="text-align: center; color: rgba(245, 240, 232, 0.5);
-                              font-size: 0.7rem; margin-top: -0.5rem;">
+                    <p style="text-align: center; color: #9A9A9A;
+                              font-size: 12px; margin-top: -0.5rem; font-weight: 500;">
                         {desc}
                     </p>
                     """, unsafe_allow_html=True)
@@ -224,7 +223,9 @@ def show():
     day_of_year = datetime.now().timetuple().tm_yday
     tip_idx = day_of_year % len(ECO_TIPS)
     st.markdown("""
-    <h3 style="color: #2ECC71; margin-bottom: 0.5rem;">🌿 Eco Tip of the Day</h3>
+    <h3 style="color: #3D7A5E; margin-bottom: 0.5rem; font-weight: 800; font-family: 'Plus Jakarta Sans', sans-serif;">
+        🌿 Eco Tip of the Day
+    </h3>
     """, unsafe_allow_html=True)
     eco_tip_card(ECO_TIPS[tip_idx])
 
@@ -232,7 +233,9 @@ def show():
 
     # ═══════ Recent Activity Feed ═══════
     st.markdown("""
-    <h3 style="color: #7EC8E3; margin-bottom: 0.5rem;">📰 Recent Activity</h3>
+    <h3 style="color: #3D7A5E; margin-bottom: 0.5rem; font-weight: 800; font-family: 'Plus Jakarta Sans', sans-serif;">
+        📰 Recent Activity
+    </h3>
     """, unsafe_allow_html=True)
 
     activities = []
@@ -254,13 +257,13 @@ def show():
     if activities:
         for activity in activities[:5]:
             st.markdown(f"""
-            <div class="terra-card" style="padding: 0.8rem 1.2rem; margin-bottom: 0.5rem;">
-                <span style="color: #F5F0E8; font-size: 0.85rem;">{activity}</span>
+            <div class="terra-card" style="padding: 12px 16px; margin-bottom: 8px; border-left: 3px solid #3D7A5E;">
+                <span style="color: #2C2C2C; font-size: 0.9rem; font-weight: 500;">{activity}</span>
             </div>
             """, unsafe_allow_html=True)
     else:
         st.markdown("""
-        <div class="terra-card" style="text-align: center; padding: 1.5rem; color: rgba(245,240,232,0.5);">
-            <p>No recent activity yet. Start exploring! 🚀</p>
+        <div class="terra-card" style="text-align: center; padding: 24px; color: #9A9A9A; background: #F2EDE4;">
+            <p style="margin: 0;">No recent activity yet. Start exploring! 🚀</p>
         </div>
         """, unsafe_allow_html=True)

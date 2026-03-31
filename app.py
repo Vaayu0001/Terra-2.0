@@ -64,186 +64,11 @@ from modules.gamification import GamificationEngine
 from ui.components import level_progress_bar
 
 
-# ═══════ LOGIN / REGISTER PAGE ═══════
+# ═══════ LOGIN PAGE ═══════
 def show_auth_page():
-    """Render the login/register page."""
-
-    col_brand, col_form = st.columns([1, 1], gap="large")
-
-    with col_brand:
-        st.markdown("""
-        <div style="
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            padding: 3rem 1rem;
-        ">
-            <div style="
-                font-size: 6rem;
-                animation: pulse 2s ease infinite;
-            ">🌍</div>
-            <h1 style="
-                font-size: 3rem;
-                margin: 1rem 0 0.5rem 0;
-                background: linear-gradient(135deg, #2ECC71, #7EC8E3);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                background-clip: text;
-                font-weight: 700;
-            ">Terra 2.0</h1>
-            <p style="
-                color: #7EC8E3;
-                font-size: 1.2rem;
-                text-align: center;
-                max-width: 400px;
-            ">Your planet needs a glow-up. Start here.</p>
-            <div style="
-                margin-top: 2rem;
-                color: rgba(245, 240, 232, 0.5);
-                font-size: 0.85rem;
-                text-align: center;
-            ">
-                🌿 Carbon Tracker • 🔥 AI Roast • 🃏 Eco Swipe<br>
-                🏆 Leaderboard • 😂 Meme Factory • 📦 Eco Score<br>
-                ♻️ Waste Classifier • 🎮 XP & Badges
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    with col_form:
-        st.markdown("""
-        <div class="terra-card-glow" style="padding: 2rem;">
-            <h2 style="text-align: center; color: #F5F0E8; margin-bottom: 1rem;">
-                Join the Movement 🌱
-            </h2>
-        </div>
-        """, unsafe_allow_html=True)
-
-        auth_tab = st.radio(
-            "Choose action",
-            ["🔑 Login", "📝 Register"],
-            horizontal=True,
-            key="auth_tab",
-            label_visibility="collapsed"
-        )
-
-        if auth_tab == "🔑 Login":
-            _show_login_form()
-        else:
-            _show_register_form()
-
-
-def _show_login_form():
-    """Render the login form."""
-    with st.form("login_form"):
-        username = st.text_input(
-            "Username",
-            placeholder="Enter your username",
-            key="login_username"
-        )
-        password = st.text_input(
-            "Password",
-            type="password",
-            placeholder="Enter your password",
-            key="login_password"
-        )
-
-        submitted = st.form_submit_button(
-            "🔑 Login",
-            use_container_width=True
-        )
-
-        if submitted:
-            if not username or not password:
-                st.error("Please fill in all fields!")
-            else:
-                user = AuthManager.login(username.strip(), password)
-                if user:
-                    # Award daily login XP
-                    xp_result = GamificationEngine.award_xp(
-                        user["user_id"], "daily_login"
-                    )
-
-                    st.session_state["logged_in"] = True
-                    st.session_state["user_id"] = user["user_id"]
-                    st.session_state["username"] = user["username"]
-                    st.session_state["college"] = user["college"]
-                    st.session_state["role"] = user["role"]
-                    st.session_state["xp"] = user["xp"] + xp_result.get("xp_earned", 0)
-                    st.session_state["level"] = xp_result.get("new_level", user["level"])
-                    st.session_state["streak"] = user["streak"]
-                    st.session_state["page"] = "home"
-                    st.rerun()
-                else:
-                    st.error("Invalid username or password!")
-
-
-def _show_register_form():
-    """Render the registration form."""
-    with st.form("register_form"):
-        username = st.text_input(
-            "Username",
-            placeholder="Choose a unique username",
-            key="reg_username"
-        )
-        email = st.text_input(
-            "Email",
-            placeholder="your@email.com",
-            key="reg_email"
-        )
-        password = st.text_input(
-            "Password",
-            type="password",
-            placeholder="Min 6 characters",
-            key="reg_password"
-        )
-        confirm_password = st.text_input(
-            "Confirm Password",
-            type="password",
-            placeholder="Re-enter password",
-            key="reg_confirm"
-        )
-        college = st.text_input(
-            "College / University",
-            placeholder="e.g., IIT Madras, SRM University",
-            key="reg_college"
-        )
-        role = st.selectbox(
-            "Role",
-            ["student", "faculty", "researcher", "enthusiast"],
-            key="reg_role"
-        )
-
-        submitted = st.form_submit_button(
-            "📝 Create Account",
-            use_container_width=True
-        )
-
-        if submitted:
-            if not all([username, email, password, confirm_password, college]):
-                st.error("Please fill in all fields!")
-            elif len(password) < 6:
-                st.error("Password must be at least 6 characters!")
-            elif password != confirm_password:
-                st.error("Passwords don't match!")
-            elif "@" not in email:
-                st.error("Please enter a valid email!")
-            else:
-                result = AuthManager.register(
-                    username.strip(),
-                    email.strip(),
-                    password,
-                    college.strip(),
-                    role,
-                )
-
-                if result["success"]:
-                    st.success("🎉 Account created! Please log in.")
-                    st.balloons()
-                else:
-                    st.error(f"Registration failed: {result['error']}")
+    """Render the login/signup page."""
+    from ui.pages.login import show
+    show()
 
 
 # ═══════ SIDEBAR ═══════
@@ -251,15 +76,14 @@ def show_sidebar():
     """Render the sidebar with navigation."""
     with st.sidebar:
         st.markdown("""
-        <div style="text-align: center; padding: 1rem 0;">
-            <div style="font-size: 2rem;">🌍</div>
+        <div style="text-align: center; padding: 1.5rem 0; margin-bottom: 0.5rem;">
+            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🌿</div>
             <h2 style="
-                margin: 0.3rem 0;
-                background: linear-gradient(135deg, #2ECC71, #7EC8E3);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                background-clip: text;
+                margin: 0;
+                color: #3D7A5E;
                 font-size: 1.5rem;
+                font-weight: 800;
+                font-family: 'Plus Jakarta Sans', sans-serif;
             ">Terra 2.0</h2>
         </div>
         """, unsafe_allow_html=True)
@@ -271,13 +95,20 @@ def show_sidebar():
 
         avatar_url = f"https://api.dicebear.com/7.x/adventurer/svg?seed={username}"
         st.markdown(f"""
-        <div style="text-align: center; margin-bottom: 1rem;">
+        <div style="
+            text-align: center;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: #FFFFFF;
+            border: 1px solid #E8E0D5;
+            border-radius: 12px;
+        ">
             <img src="{avatar_url}" width="60" height="60"
-                 style="border-radius: 50%; border: 2px solid #2ECC71;">
-            <div style="color: #F5F0E8; font-weight: 600; margin-top: 0.3rem;">
+                 style="border-radius: 50%; border: 2px solid #3D7A5E; display: block; margin: 0 auto 0.5rem;">
+            <div style="color: #2C2C2C; font-weight: 700; margin-bottom: 0.2rem;">
                 {username}
             </div>
-            <div style="color: #F4C430; font-size: 0.8rem;">
+            <div style="color: #D4A853; font-size: 0.75rem; font-weight: 600;">
                 Lv.{level_info['level']} {level_info['name']}
             </div>
         </div>
@@ -301,12 +132,7 @@ def show_sidebar():
         }
 
         current_page = st.session_state.get("page", "home")
-        current_label = "🏠 Home"
-        for label, key in pages.items():
-            if key == current_page:
-                current_label = label
-                break
-
+        
         selected = st.radio(
             "Navigate",
             options=list(pages.keys()),
@@ -324,7 +150,15 @@ def show_sidebar():
         # Quick stats
         streak = st.session_state.get("streak", 0)
         st.markdown(f"""
-        <div style="text-align: center; color: rgba(245, 240, 232, 0.6); font-size: 0.8rem;">
+        <div style="
+            text-align: center;
+            color: #5C5C5C;
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 1rem;
+            background: #F2EDE4;
+            border-radius: 10px;
+        ">
             🔥 Streak: {streak} days<br>
             ⭐ {xp:,} XP Total
         </div>

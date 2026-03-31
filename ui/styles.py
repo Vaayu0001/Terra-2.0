@@ -1,411 +1,505 @@
 """
-Terra 2.0 — Global CSS Styles
-Includes Google Fonts, animated mesh background, particles,
-glassmorphism cards, custom scrollbar, and all component overrides.
+Terra 2.0 — Global CSS Styles (Light, Warm Theme)
+Warm beige/earth-tone light theme with forest green accents.
+Includes modern cards, smooth transitions, and accessibility features.
 """
 
 
 def get_global_css() -> str:
-    """Return the complete CSS string for Terra 2.0."""
+    """Return the complete CSS string for Terra 2.0 with warm light theme."""
+    return """
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
 
-    # Generate particle CSS for 25 particles
-    particle_css_items = []
-    for i in range(1, 26):
-        left = (i * 4) % 100
-        delay = (i * 0.7) % 15
-        duration = 12 + (i % 8) * 2
-        size = 3 + (i % 6)
-        color = "#2ECC71" if i % 2 == 0 else "#7EC8E3"
-        opacity = 0.3 + (i % 4) * 0.1
+    :root {
+        --bg-primary: #FAF7F2;
+        --bg-secondary: #F2EDE4;
+        --bg-card: #FFFFFF;
+        --accent-green: #3D7A5E;
+        --accent-light: #6BAF8A;
+        --accent-warm: #C8794A;
+        --accent-gold: #D4A853;
+        --text-primary: #2C2C2C;
+        --text-secondary: #5C5C5C;
+        --text-muted: #9A9A9A;
+        --border: #E8E0D5;
+        --shadow: rgba(60, 40, 20, 0.08);
+    }
 
-        particle_css_items.append(f"""
-        .particle:nth-child({i}) {{
-            left: {left}%;
-            width: {size}px;
-            height: {size}px;
-            background: {color};
-            animation-delay: {delay:.1f}s;
-            animation-duration: {duration}s;
-            opacity: {opacity};
-        }}""")
+    /* ═══════ Hide Streamlit Default Chrome ═══════ */
+    #MainMenu { visibility: hidden; }
+    footer { visibility: hidden; }
+    header { visibility: hidden; }
+    .stDeployButton { display: none; }
 
-    particles_css = "\n".join(particle_css_items)
+    /* ═══════ Root Background ═══════ */
+    .stApp {
+        background-color: var(--bg-primary) !important;
+        font-family: 'Inter', 'Plus Jakarta Sans', sans-serif !important;
+    }
 
-    return f"""
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap');
+    /* ═══════ Main Content Area ═══════ */
+    .main, [data-testid="stAppViewContainer"] {
+        background-color: var(--bg-primary) !important;
+    }
 
-    :root {{
-        --terra-green:   #2ECC71;
-        --terra-dark:    #0D1F1A;
-        --terra-beige:   #F5F0E8;
-        --terra-sky:     #7EC8E3;
-        --terra-yellow:  #F4C430;
-        --terra-accent:  #FF6B35;
-        --terra-muted:   #2D4A3E;
-        --terra-card:    rgba(45, 74, 62, 0.55);
-    }}
-
-    /* ═══════ Animated Gradient Mesh Background ═══════ */
-    @keyframes meshMove {{
-        0%, 100% {{ background-position: 0% 50%; }}
-        50% {{ background-position: 100% 50%; }}
-    }}
-
-    .stApp {{
-        background: linear-gradient(135deg, #0D1F1A 0%, #0a2e20 30%, #0f1a2e 60%, #0D1F1A 100%) !important;
-        background-size: 400% 400% !important;
-        animation: meshMove 18s ease infinite !important;
-    }}
-
-    /* ═══════ Floating Particles ═══════ */
-    @keyframes float {{
-        0% {{ transform: translateY(100vh); opacity: 0; }}
-        10% {{ opacity: 0.6; }}
-        90% {{ opacity: 0.3; }}
-        100% {{ transform: translateY(-10vh); opacity: 0; }}
-    }}
-
-    .particle {{
-        position: fixed;
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 0;
-        animation: float linear infinite;
-    }}
-
-    {particles_css}
-
-    /* ═══════ Hide Streamlit Chrome ═══════ */
-    #MainMenu {{ visibility: hidden; }}
-    footer {{ visibility: hidden; }}
-    header {{ visibility: hidden; }}
-    .stDeployButton {{ display: none; }}
-
-    /* ═══════ Custom Sidebar ═══════ */
-    [data-testid="stSidebar"] {{
-        background: rgba(13, 31, 26, 0.95) !important;
-        backdrop-filter: blur(20px);
-        border-right: 1px solid rgba(46, 204, 113, 0.2) !important;
-    }}
-
-    [data-testid="stSidebar"] .stMarkdown {{
-        color: #F5F0E8 !important;
-    }}
-
-    [data-testid="stSidebar"] .stRadio label {{
-        color: #F5F0E8 !important;
-    }}
-
-    [data-testid="stSidebar"] .stRadio label:hover {{
-        color: #2ECC71 !important;
-    }}
-
-    /* ═══════ Button Overrides ═══════ */
-    .stButton button {{
-        background: linear-gradient(135deg, #2ECC71, #7EC8E3) !important;
-        color: #0D1F1A !important;
-        font-weight: 600 !important;
-        border-radius: 50px !important;
-        border: none !important;
-        padding: 0.6rem 2rem !important;
-        transition: all 0.3s ease !important;
-        font-family: 'Plus Jakarta Sans', sans-serif !important;
-        letter-spacing: 0.5px;
-    }}
-
-    .stButton button:hover {{
-        transform: translateY(-2px) !important;
-        box-shadow: 0 8px 25px rgba(46, 204, 113, 0.4) !important;
-    }}
-
-    .stButton button:active {{
-        transform: translateY(0) !important;
-    }}
-
-    /* ═══════ Metric Cards ═══════ */
-    [data-testid="metric-container"] {{
-        background: rgba(45, 74, 62, 0.5) !important;
-        backdrop-filter: blur(15px);
-        border: 1px solid rgba(46, 204, 113, 0.2) !important;
+    /* ═══════ Cards Base Style ═══════ */
+    .terra-card {
+        background: var(--bg-card) !important;
         border-radius: 16px !important;
-        padding: 1rem !important;
-    }}
+        border: 1px solid var(--border) !important;
+        box-shadow: 0 2px 12px var(--shadow) !important;
+        padding: 24px !important;
+        transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+    }
+    .terra-card:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 24px var(--shadow) !important;
+    }
 
-    [data-testid="metric-container"] label {{
-        color: #7EC8E3 !important;
-    }}
+    /* ═══════ Cards with Glow ═══════ */
+    .terra-card-glow {
+        background: var(--bg-card) !important;
+        border-radius: 16px !important;
+        border: 1.5px solid var(--accent-green) !important;
+        box-shadow: 0 4px 20px rgba(61, 122, 94, 0.12) !important;
+        padding: 24px !important;
+        transition: all 0.3s ease !important;
+    }
+    .terra-card-glow:hover {
+        transform: translateY(-4px) !important;
+        box-shadow: 0 8px 32px rgba(61, 122, 94, 0.2) !important;
+    }
 
-    [data-testid="metric-container"] [data-testid="stMetricValue"] {{
-        color: #F5F0E8 !important;
-    }}
+    /* ═══════ Sidebar ═══════ */
+    .css-1d391kg, [data-testid="stSidebar"] {
+        background: var(--bg-secondary) !important;
+        border-right: 1px solid var(--border) !important;
+    }
 
-    /* ═══════ Progress Bar ═══════ */
-    .stProgress > div > div {{
-        background: linear-gradient(90deg, #2ECC71, #7EC8E3) !important;
-        border-radius: 10px !important;
-    }}
+    [data-testid="stSidebar"] .stMarkdown {
+        color: var(--text-primary) !important;
+    }
 
-    .stProgress > div {{
-        background: rgba(45, 74, 62, 0.4) !important;
-        border-radius: 10px !important;
-    }}
+    [data-testid="stSidebar"] .stRadio label {
+        color: var(--text-primary) !important;
+        font-weight: 500 !important;
+    }
+
+    [data-testid="stSidebar"] .stRadio label:hover {
+        color: var(--accent-green) !important;
+    }
+
+    /* ═══════ Buttons ═══════ */
+    .stButton > button {
+        background: linear-gradient(135deg, var(--accent-green), var(--accent-light)) !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 12px !important;
+        padding: 12px 28px !important;
+        font-weight: 600 !important;
+        font-size: 15px !important;
+        transition: all 0.2s ease !important;
+        box-shadow: 0 2px 8px rgba(61, 122, 94, 0.3) !important;
+    }
+    .stButton > button:hover {
+        transform: translateY(-1px) !important;
+        box-shadow: 0 4px 16px rgba(61, 122, 94, 0.4) !important;
+    }
+    .stButton > button:active {
+        transform: translateY(0) !important;
+    }
+
+    /* ═══════ Primary Button Variant ═══════ */
+    .btn-primary {
+        background: linear-gradient(135deg, var(--accent-green), var(--accent-light)) !important;
+        color: white !important;
+    }
+
+    /* ═══════ Secondary Button Variant ═══════ */
+    .btn-secondary {
+        background: var(--bg-secondary) !important;
+        color: var(--text-primary) !important;
+        border: 1.5px solid var(--border) !important;
+    }
+
+    /* ═══════ Warning/Danger Buttons ═══════ */
+    .btn-danger {
+        background: linear-gradient(135deg, #E74C3C, #C0392B) !important;
+        color: white !important;
+    }
 
     /* ═══════ Input Fields ═══════ */
-    .stTextInput input {{
-        background: rgba(45, 74, 62, 0.4) !important;
-        border: 1px solid rgba(46, 204, 113, 0.3) !important;
-        border-radius: 12px !important;
-        color: #F5F0E8 !important;
-        font-family: 'DM Sans', sans-serif !important;
-    }}
+    .stTextInput > div > div > input,
+    .stTextInput > div > div > input:focus,
+    .stNumberInput > div > div > input,
+    .stNumberInput > div > div > input:focus {
+        background: var(--bg-primary) !important;
+        border: 1.5px solid var(--border) !important;
+        border-radius: 10px !important;
+        color: var(--text-primary) !important;
+        padding: 12px 16px !important;
+        font-size: 15px !important;
+        font-family: 'Inter', sans-serif !important;
+    }
+    .stTextInput > div > div > input:focus,
+    .stNumberInput > div > div > input:focus {
+        border-color: var(--accent-green) !important;
+        box-shadow: 0 0 0 3px rgba(61, 122, 94, 0.12) !important;
+    }
 
-    .stTextInput input:focus {{
-        border-color: var(--terra-green) !important;
-        box-shadow: 0 0 15px rgba(46, 204, 113, 0.2) !important;
-    }}
+    .stTextArea textarea {
+        background: var(--bg-primary) !important;
+        border: 1.5px solid var(--border) !important;
+        border-radius: 10px !important;
+        color: var(--text-primary) !important;
+        padding: 12px 16px !important;
+        font-size: 15px !important;
+    }
+    .stTextArea textarea:focus {
+        border-color: var(--accent-green) !important;
+        box-shadow: 0 0 0 3px rgba(61, 122, 94, 0.12) !important;
+    }
 
-    .stSelectbox > div > div {{
-        background: rgba(45, 74, 62, 0.4) !important;
-        border: 1px solid rgba(46, 204, 113, 0.3) !important;
-        border-radius: 12px !important;
-        color: #F5F0E8 !important;
-    }}
+    /* ═══════ Select/Dropdown ═══════ */
+    .stSelectbox > div > div {
+        background: var(--bg-primary) !important;
+        border: 1.5px solid var(--border) !important;
+        border-radius: 10px !important;
+        color: var(--text-primary) !important;
+    }
+    .stSelectbox > div > div:focus {
+        border-color: var(--accent-green) !important;
+    }
 
-    .stNumberInput input {{
-        background: rgba(45, 74, 62, 0.4) !important;
-        border: 1px solid rgba(46, 204, 113, 0.3) !important;
-        border-radius: 12px !important;
-        color: #F5F0E8 !important;
-    }}
-
-    .stTextArea textarea {{
-        background: rgba(45, 74, 62, 0.4) !important;
-        border: 1px solid rgba(46, 204, 113, 0.3) !important;
-        border-radius: 12px !important;
-        color: #F5F0E8 !important;
-    }}
-
-    /* ═══════ Radio Buttons ═══════ */
-    .stRadio label {{
-        color: #F5F0E8 !important;
-    }}
-
-    /* ═══════ Checkbox ═══════ */
-    .stCheckbox label {{
-        color: #F5F0E8 !important;
-    }}
+    /* ═══════ Checkbox & Radio ═══════ */
+    .stCheckbox label, .stRadio label {
+        color: var(--text-primary) !important;
+        font-weight: 500 !important;
+    }
 
     /* ═══════ Slider ═══════ */
-    .stSlider label {{
-        color: #F5F0E8 !important;
-    }}
+    .stSlider label {
+        color: var(--text-primary) !important;
+        font-weight: 500 !important;
+    }
 
-    /* ═══════ Terra Card (Glassmorphism) ═══════ */
-    .terra-card {{
-        background: rgba(45, 74, 62, 0.55);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border: 1px solid rgba(46, 204, 113, 0.2);
-        border-radius: 20px;
-        padding: 1.5rem;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        margin-bottom: 1rem;
-        transition: all 0.3s ease;
-    }}
+    /* ═══════ Progress Bar ═══════ */
+    .stProgress > div > div {
+        background: linear-gradient(90deg, var(--accent-green), var(--accent-light)) !important;
+        border-radius: 999px !important;
+    }
+    .stProgress > div {
+        background: var(--bg-secondary) !important;
+        border-radius: 999px !important;
+    }
 
-    .terra-card:hover {{
-        border-color: rgba(46, 204, 113, 0.5);
-        transform: translateY(-3px);
-    }}
-
-    .terra-card-glow {{
-        background: rgba(45, 74, 62, 0.55);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border: 1px solid rgba(46, 204, 113, 0.4);
-        border-radius: 20px;
-        padding: 1.5rem;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
-                    0 0 30px rgba(46, 204, 113, 0.15);
-        margin-bottom: 1rem;
-        transition: all 0.3s ease;
-    }}
-
-    .terra-card-glow:hover {{
-        border-color: rgba(46, 204, 113, 0.7);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
-                    0 0 50px rgba(46, 204, 113, 0.25);
-    }}
-
-    /* ═══════ Typography ═══════ */
-    h1, h2, h3 {{
-        font-family: 'Plus Jakarta Sans', sans-serif !important;
-        color: #F5F0E8 !important;
-    }}
-
-    p, span, div, label {{
-        font-family: 'DM Sans', sans-serif;
-    }}
-
-    .stMarkdown p, .stMarkdown span {{
-        color: #F5F0E8;
-    }}
-
-    /* ═══════ Custom Scrollbar ═══════ */
-    ::-webkit-scrollbar {{
-        width: 5px;
-    }}
-
-    ::-webkit-scrollbar-track {{
-        background: #0D1F1A;
-    }}
-
-    ::-webkit-scrollbar-thumb {{
-        background: #2ECC71;
-        border-radius: 5px;
-    }}
-
-    ::-webkit-scrollbar-thumb:hover {{
-        background: #27ae60;
-    }}
-
-    /* ═══════ Glow Text Animation ═══════ */
-    @keyframes glow {{
-        0%, 100% {{ text-shadow: 0 0 10px rgba(46, 204, 113, 0.5); }}
-        50% {{ text-shadow: 0 0 25px rgba(46, 204, 113, 0.9),
-                             0 0 50px rgba(46, 204, 113, 0.4); }}
-    }}
-
-    .glow-text {{
-        animation: glow 3s ease infinite;
-    }}
-
-    /* ═══════ Page Fade In ═══════ */
-    @keyframes fadeIn {{
-        from {{ opacity: 0; transform: translateY(20px); }}
-        to {{ opacity: 1; transform: translateY(0); }}
-    }}
-
-    .main .block-container {{
-        animation: fadeIn 0.6s ease forwards;
-    }}
-
-    /* ═══════ Tabs Override ═══════ */
-    .stTabs [data-baseweb="tab-list"] {{
-        gap: 8px;
-    }}
-
-    .stTabs [data-baseweb="tab"] {{
-        background: rgba(45, 74, 62, 0.4) !important;
+    /* ═══════ Metrics ═══════ */
+    [data-testid="stMetric"] {
+        background: var(--bg-card) !important;
         border-radius: 12px !important;
-        color: #F5F0E8 !important;
-        font-family: 'Plus Jakarta Sans', sans-serif !important;
-        border: 1px solid rgba(46, 204, 113, 0.2) !important;
-    }}
+        padding: 16px !important;
+        border: 1px solid var(--border) !important;
+    }
+    [data-testid="stMetric"] label {
+        color: var(--text-secondary) !important;
+        font-weight: 500 !important;
+    }
+    [data-testid="stMetricValue"] {
+        color: var(--accent-green) !important;
+    }
 
-    .stTabs [aria-selected="true"] {{
-        background: rgba(46, 204, 113, 0.3) !important;
-        border-color: rgba(46, 204, 113, 0.6) !important;
-    }}
+    /* ═══════ Tabs ═══════ */
+    .stTabs [data-baseweb="tab-list"] {
+        background: var(--bg-secondary);
+        border-radius: 12px;
+        padding: 4px;
+        gap: 4px;
+        border-bottom: none !important;
+    }
+    .stTabs [data-baseweb="tab"] {
+        border-radius: 8px;
+        color: var(--text-secondary);
+        font-weight: 500;
+        padding: 8px 16px !important;
+    }
+    .stTabs [aria-selected="true"] {
+        background: white !important;
+        color: var(--accent-green) !important;
+        font-weight: 600 !important;
+        box-shadow: 0 1px 4px var(--shadow) !important;
+    }
 
     /* ═══════ Expander ═══════ */
-    .streamlit-expanderHeader {{
-        background: rgba(45, 74, 62, 0.4) !important;
+    .streamlit-expanderHeader {
+        background: var(--bg-secondary) !important;
+        border-radius: 10px !important;
+        color: var(--text-primary) !important;
+        border: 1px solid var(--border) !important;
+    }
+
+    /* ═══════ Alerts & Messages ═══════ */
+    .stAlert {
         border-radius: 12px !important;
-        color: #F5F0E8 !important;
-    }}
+        border: 1px solid var(--border) !important;
+    }
 
-    /* ═══════ Download Button ═══════ */
-    .stDownloadButton button {{
-        background: linear-gradient(135deg, #F4C430, #FF6B35) !important;
-        color: #0D1F1A !important;
-        font-weight: 600 !important;
-        border-radius: 50px !important;
-        border: none !important;
-    }}
-
-    .stDownloadButton button:hover {{
-        transform: translateY(-2px) !important;
-        box-shadow: 0 8px 25px rgba(244, 196, 48, 0.4) !important;
-    }}
-
-    /* ═══════ Divider ═══════ */
-    hr {{
-        border-color: rgba(46, 204, 113, 0.2) !important;
-    }}
-
-    /* ═══════ Alert / Warning ═══════ */
-    .stAlert {{
-        background: rgba(45, 74, 62, 0.5) !important;
-        border: 1px solid rgba(46, 204, 113, 0.3) !important;
+    /* ═══════ Error Alert ═══════ */
+    [data-testid="stAlert"] {
+        background: #FEF3F2 !important;
+        border: 1px solid #FECBCB !important;
         border-radius: 12px !important;
-        color: #F5F0E8 !important;
-    }}
+        color: #B42318 !important;
+    }
+
+    /* ═══════ Success Alert ═══════ */
+    .element-container [data-testid="stAlert"] {
+        background: #F0FDF4 !important;
+        border: 1px solid #DCFCE7 !important;
+        color: #166534 !important;
+    }
+
+    /* ═══════ Info Alert ═══════ */
+    .stInfo {
+        background: #F0F9FF !important;
+        border: 1px solid #BFDBFE !important;
+        color: #0C4A6E !important;
+    }
+
+    /* ═══════ Loading Spinner ═══════ */
+    .terra-loader {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 20px;
+        color: var(--text-secondary);
+        font-size: 15px;
+        font-weight: 500;
+    }
+    .terra-loader::before {
+        content: '';
+        width: 20px;
+        height: 20px;
+        border: 2.5px solid var(--border);
+        border-top-color: var(--accent-green);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+        flex-shrink: 0;
+    }
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    /* ═══════ Badge Pills ═══════ */
+    .badge-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #EEF7F2;
+        color: var(--accent-green);
+        border: 1px solid #C8E6D5;
+        border-radius: 999px;
+        padding: 6px 14px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    /* ═══════ Badge Variants ═══════ */
+    .badge-warm {
+        background: #FDF3E8;
+        color: var(--accent-warm);
+        border-color: #FDDBB0;
+    }
+    .badge-gold {
+        background: #FEF9E7;
+        color: var(--accent-gold);
+        border-color: #F5D89C;
+    }
+
+    /* ═══════ XP Bar ═══════ */
+    .xp-bar-container {
+        background: var(--bg-secondary);
+        border-radius: 999px;
+        height: 8px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+    }
+    .xp-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent-green), var(--accent-light));
+        border-radius: 999px;
+        transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
     /* ═══════ Score Circle ═══════ */
-    .score-circle {{
+    .score-circle {
         display: inline-flex;
         align-items: center;
         justify-content: center;
         flex-direction: column;
-    }}
+        width: 120px;
+        height: 120px;
+        background: linear-gradient(135deg, rgba(61, 122, 94, 0.1), rgba(107, 175, 138, 0.1));
+        border: 2px solid var(--accent-green);
+        border-radius: 50%;
+        font-weight: 700;
+        font-size: 32px;
+        color: var(--accent-green);
+    }
 
-    /* ═══════ Navigation Grid ═══════ */
-    .nav-card {{
-        background: rgba(45, 74, 62, 0.45);
-        backdrop-filter: blur(15px);
-        border: 1px solid rgba(46, 204, 113, 0.15);
+    /* ═══════ Navigation Grid Cards ═══════ */
+    .nav-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
         border-radius: 16px;
-        padding: 1.2rem;
+        padding: 20px;
         text-align: center;
         transition: all 0.3s ease;
         cursor: pointer;
-    }}
+    }
+    .nav-card:hover {
+        border-color: var(--accent-green);
+        transform: translateY(-6px);
+        box-shadow: 0 12px 32px var(--shadow);
+    }
 
-    .nav-card:hover {{
-        border-color: rgba(46, 204, 113, 0.5);
-        transform: translateY(-5px);
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
-    }}
+    /* ═══════ Divider ═══════ */
+    hr {
+        border-color: var(--border) !important;
+        margin: 24px 0 !important;
+    }
 
-    /* ═══════ Badge Grid ═══════ */
-    .badge-item {{
-        background: rgba(45, 74, 62, 0.4);
-        border: 1px solid rgba(46, 204, 113, 0.2);
-        border-radius: 12px;
-        padding: 0.8rem;
-        text-align: center;
-        transition: all 0.3s ease;
-    }}
+    /* ═══════ Typography ═══════ */
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Plus Jakarta Sans', sans-serif !important;
+        color: var(--text-primary) !important;
+        font-weight: 700 !important;
+    }
 
-    .badge-item:hover {{
-        transform: scale(1.05);
-        border-color: rgba(46, 204, 113, 0.5);
-    }}
+    p, span, label, div {
+        color: var(--text-primary);
+        font-family: 'Inter', sans-serif;
+    }
 
-    /* ═══════ Multiselect ═══════ */
-    .stMultiSelect > div {{
-        background: rgba(45, 74, 62, 0.4) !important;
-        border: 1px solid rgba(46, 204, 113, 0.3) !important;
-        border-radius: 12px !important;
-    }}
+    .stMarkdown {
+        color: var(--text-primary);
+    }
 
-    /* ═══════ Toast Override ═══════ */
-    [data-testid="stToast"] {{
-        background: rgba(13, 31, 26, 0.95) !important;
-        border: 1px solid rgba(46, 204, 113, 0.3) !important;
-        border-radius: 12px !important;
-        color: #F5F0E8 !important;
-    }}
+    /* ═══════ Links ═══════ */
+    a {
+        color: var(--accent-green) !important;
+        text-decoration: none !important;
+        font-weight: 600 !important;
+    }
+    a:hover {
+        color: var(--accent-light) !important;
+    }
 
-    /* ═══════ Pulse Animation ═══════ */
-    @keyframes pulse {{
-        0% {{ transform: scale(1); }}
-        50% {{ transform: scale(1.05); }}
-        100% {{ transform: scale(1); }}
-    }}
+    /* ═══════ Scrollbar ═══════ */
+    ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+        background: var(--bg-secondary);
+    }
+    ::-webkit-scrollbar-thumb {
+        background: var(--border);
+        border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--accent-green);
+    }
 
-    .pulse {{
+    /* ═══════ Code Blocks ═══════ */
+    pre, code {
+        background: var(--bg-secondary) !important;
+        color: var(--text-primary) !important;
+        border-radius: 8px !important;
+        border: 1px solid var(--border) !important;
+    }
+
+    /* ═══════ Animations ═══════ */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in {
+        animation: fadeIn 0.4s ease forwards;
+    }
+
+    @keyframes slideInFromLeft {
+        from { opacity: 0; transform: translateX(-20px); }
+        to { opacity: 1; transform: translateX(0); }
+    }
+    .slide-in-left {
+        animation: slideInFromLeft 0.3s ease forwards;
+    }
+
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.7; }
+    }
+    .pulse {
         animation: pulse 2s ease infinite;
-    }}
+    }
+
+    /* ═══════ Responsive ═══════ */
+    @media (max-width: 768px) {
+        .terra-card {
+            padding: 16px !important;
+        }
+        .stButton > button {
+            padding: 10px 20px !important;
+            font-size: 14px !important;
+        }
+    }
+    """
+
+
+def get_loading_html(message: str = "Loading...") -> str:
+    """Return HTML for a loading spinner with message."""
+    return f"""
+    <div class="terra-loader">{message}</div>
+    """
+
+
+def get_success_toast(message: str) -> str:
+    """Return styled success toast HTML."""
+    return f"""
+    <div style="
+        background: #F0FDF4;
+        border: 1.5px solid #86EFAC;
+        border-radius: 12px;
+        padding: 16px 20px;
+        color: #15803D;
+        font-weight: 500;
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    ">
+        <span style="font-size: 20px;">✅</span>
+        <span>{message}</span>
+    </div>
+    """
+
+
+def get_error_toast(message: str) -> str:
+    """Return styled error toast HTML."""
+    return f"""
+    <div style="
+        background: #FEF3F2;
+        border: 1.5px solid #FCCAB1;
+        border-radius: 12px;
+        padding: 16px 20px;
+        color: #B42318;
+        font-weight: 500;
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    ">
+        <span style="font-size: 20px;">❌</span>
+        <span>{message}</span>
+    </div>
     """
