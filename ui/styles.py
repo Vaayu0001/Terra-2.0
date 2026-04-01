@@ -166,15 +166,98 @@ def get_global_css() -> str:
         border: 1.5px solid var(--border) !important;
         border-radius: 10px !important;
         color: var(--text-primary) !important;
+        transition: all 0.2s ease !important;
     }
+    
+    /* Target all nested text in selectbox */
+    .stSelectbox > div > div > div {
+        color: var(--text-primary) !important;
+    }
+    
+    .stSelectbox > div > div > div > div {
+        color: var(--text-primary) !important;
+    }
+    
+    .stSelectbox > div > div > div span {
+        color: var(--text-primary) !important;
+    }
+    
+    .stSelectbox > div > div > div > div span {
+        color: var(--text-primary) !important;
+    }
+    
+    .stSelectbox input {
+        color: var(--text-primary) !important;
+    }
+    
+    .stSelectbox input::placeholder {
+        color: var(--text-muted) !important;
+    }
+    
+    /* Hover state - dark background with white text */
+    .stSelectbox > div > div:hover {
+        background: var(--accent-green) !important;
+        color: white !important;
+    }
+    
+    .stSelectbox > div > div:hover > div {
+        color: white !important;
+    }
+    
+    .stSelectbox > div > div:hover div {
+        color: white !important;
+    }
+    
+    .stSelectbox > div > div:hover span {
+        color: white !important;
+    }
+    
     .stSelectbox > div > div:focus {
         border-color: var(--accent-green) !important;
+        background: var(--accent-green) !important;
+        color: white !important;
+    }
+    
+    .stSelectbox > div > div:focus > div,
+    .stSelectbox > div > div:focus div,
+    .stSelectbox > div > div:focus span {
+        color: white !important;
+    }
+    
+    /* Handle open/expanded state */
+    .stSelectbox [role="listbox"] {
+        background: var(--bg-primary) !important;
+    }
+    
+    .stSelectbox [role="listbox"] * {
+        color: var(--text-primary) !important;
+    }
+    
+    .stSelectbox [role="option"] {
+        color: var(--text-primary) !important;
+    }
+    
+    .stSelectbox [role="option"]:hover {
+        color: white !important;
+        background: var(--accent-green) !important;
     }
 
     /* ═══════ Checkbox & Radio ═══════ */
     .stCheckbox label, .stRadio label {
         color: var(--text-primary) !important;
         font-weight: 500 !important;
+    }
+    .stCheckbox label:hover, .stRadio label:hover {
+        color: var(--text-primary) !important;
+    }
+    
+    /* ═══════ Form Labels ═══════ */
+    label {
+        color: var(--text-primary) !important;
+    }
+    .stTextInput label, .stNumberInput label, .stTextArea label {
+        color: var(--text-primary) !important;
+        font-weight: 600 !important;
     }
 
     /* ═══════ Slider ═══════ */
@@ -452,6 +535,105 @@ def get_global_css() -> str:
             padding: 10px 20px !important;
             font-size: 14px !important;
         }
+    }
+
+    /* ═══════ ACCENT COLORS — Streak, Badges, Medals ═══════ */
+    
+    /* Streak counter — Terracotta accent */
+    .streak-badge {
+        background: linear-gradient(135deg, var(--accent-warm), #D97A5C) !important;
+        color: white !important;
+        border-radius: 12px !important;
+        padding: 8px 16px !important;
+        font-weight: 700 !important;
+        display: inline-block !important;
+        box-shadow: 0 4px 12px rgba(200, 121, 74, 0.3) !important;
+    }
+
+    /* Level badge — Gold border */
+    .level-badge {
+        border: 2.5px solid var(--accent-gold) !important;
+        background: linear-gradient(135deg, #FFF9E6 0%, #FFFBF0 100%) !important;
+        border-radius: 12px !important;
+        padding: 12px 24px !important;
+        text-align: center !important;
+        box-shadow: 0 4px 16px rgba(212, 168, 83, 0.2) !important;
+    }
+
+    .level-badge-text {
+        color: var(--accent-gold) !important;
+        font-weight: 800 !important;
+        font-size: 1.2rem !important;
+    }
+
+    /* Leaderboard medals */
+    .medal-gold {
+        color: var(--accent-gold) !important;
+        font-size: 1.8rem !important;
+    }
+
+    .medal-silver {
+        color: #B0B0B0 !important;
+        font-size: 1.8rem !important;
+    }
+
+    .medal-bronze {
+        color: var(--accent-warm) !important;
+        font-size: 1.8rem !important;
+    }
+
+    /* Feature card accent on hover */
+    .nav-card {
+        border-left: 3px solid transparent !important;
+        transition: all 0.3s ease !important;
+    }
+
+    .nav-card:hover {
+        border-left-color: var(--accent-green) !important;
+    }
+
+    /* XP Progress Bar — Green to sage gradient */
+    .xp-progress {
+        background: linear-gradient(90deg, var(--accent-green) 0%, var(--accent-light) 100%) !important;
+        border-radius: 999px !important;
+        height: 8px !important;
+        transition: width 0.4s ease !important;
+    }
+
+    /* Badge item — Gold border accent */
+    .badge-item:hover {
+        border-color: var(--accent-gold) !important;
+        transform: scale(1.05) !important;
+        box-shadow: 0 8px 20px rgba(212, 168, 83, 0.25) !important;
+    }
+
+    /* Trophy/Leaderboard row accent colors */
+    .trophy-first {
+        border-left: 4px solid var(--accent-gold) !important;
+        background: linear-gradient(90deg, rgba(212, 168, 83, 0.1), transparent) !important;
+    }
+
+    .trophy-second {
+        border-left: 4px solid #B0B0B0 !important;
+        background: linear-gradient(90deg, rgba(176, 176, 176, 0.08), transparent) !important;
+    }
+
+    .trophy-third {
+        border-left: 4px solid var(--accent-warm) !important;
+        background: linear-gradient(90deg, rgba(200, 121, 74, 0.08), transparent) !important;
+    }
+
+    /* Eco score rating colors */
+    .eco-rating-good {
+        color: var(--accent-green) !important;
+    }
+
+    .eco-rating-okay {
+        color: var(--accent-gold) !important;
+    }
+
+    .eco-rating-poor {
+        color: var(--accent-warm) !important;
     }
     """
 

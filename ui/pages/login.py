@@ -121,7 +121,7 @@ def _render_login_form():
                 with st.spinner("🔐 Signing you in..."):
                     result = AuthManager.login(username.strip(), password)
                     
-                    if result["success"]:
+                    if result is not None:
                         st.session_state["logged_in"] = True
                         st.session_state["user_id"] = result["user_id"]
                         st.session_state["username"] = result["username"]
@@ -131,6 +131,9 @@ def _render_login_form():
                         st.session_state["role"] = result.get("role", "student")
                         st.session_state["streak"] = result.get("streak", 0)
                         st.session_state["page"] = "home"
+                        
+                        # Set query param for session persistence on refresh
+                        st.query_params["uid"] = str(result["user_id"])
                         
                         st.markdown("""
                         <div style="
@@ -154,7 +157,7 @@ def _render_login_form():
                         st.balloons()
                         st.rerun()
                     else:
-                        st.markdown(f"""
+                        st.markdown("""
                         <div style="
                             background: #FEF3F2;
                             border: 1.5px solid #FCCAB1;
@@ -169,7 +172,7 @@ def _render_login_form():
                             margin-top: 16px;
                         ">
                             <span>❌</span>
-                            <span>{result['error']}</span>
+                            <span>Invalid username or password</span>
                         </div>
                         """, unsafe_allow_html=True)
 

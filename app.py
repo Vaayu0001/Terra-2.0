@@ -15,11 +15,43 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+# ═══════ SESSION PERSISTENCE FROM QUERY PARAMS ═══════
+def restore_session_from_query_params():
+    """Restore login session using query params if browser refresh happened."""
+    # Check if already logged in this session
+    if st.session_state.get('logged_in'):
+        return
+    
+    # Try to restore from query params
+    params = st.query_params
+    user_id = params.get('uid')
+    if user_id:
+        try:
+            from modules.auth import AuthManager
+            user_data = AuthManager.get_user(int(user_id))
+            
+            if user_data:
+                # Restore session state from database
+                st.session_state['logged_in'] = True
+                st.session_state['user_id'] = user_data['user_id']
+                st.session_state['username'] = user_data['username']
+                st.session_state['college'] = user_data.get('college', '')
+                st.session_state['role'] = user_data.get('role', 'student')
+                st.session_state['xp'] = user_data.get('xp', 0)
+                st.session_state['level'] = user_data.get('level', 1)
+                st.session_state['streak'] = user_data.get('streak', 0)
+                st.session_state['page'] = 'home'
+        except Exception:
+            pass  # If restore fails, show login normally
+
 # ═══════ DATABASE INITIALIZATION ═══════
 from database.db_setup import get_engine, init_db
 
 engine = get_engine()
 init_db(engine)
+
+# Restore session after DB init
+restore_session_from_query_params()
 
 # ═══════ CSS INJECTION ═══════
 from ui.styles import get_global_css
@@ -90,6 +122,7 @@ def show_sidebar():
 
         # User info
         username = st.session_state.get("username", "User")
+        user_id = st.session_state.get("user_id", "")
         xp = st.session_state.get("xp", 0)
         level_info = GamificationEngine.calculate_level(xp)
 
@@ -110,6 +143,9 @@ def show_sidebar():
             </div>
             <div style="color: #D4A853; font-size: 0.75rem; font-weight: 600;">
                 Lv.{level_info['level']} {level_info['name']}
+            </div>
+            <div style="color: #9A9A9A; font-size: 0.7rem; margin-top: 0.3rem;">
+                ID: #{user_id}
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -168,6 +204,7 @@ def show_sidebar():
 
         # Logout button
         if st.button("🚪 Logout", use_container_width=True, key="logout_btn"):
+            st.query_params.clear()
             for key in list(st.session_state.keys()):
                 del st.session_state[key]
             st.rerun()
