@@ -18,11 +18,26 @@ A Gamified Environmental Education Platform built for Gen Z college students. Bu
 | 🌿 **Carbon Footprint Tracker** | 4-step wizard tracking transport, food, energy & shopping emissions with PDF reports |
 | 🔥 **AI Roast My Lifestyle** | Gemini-powered Gen Z-style eco roasts with practical tips |
 | 🃏 **Eco Swipe Game** | Tinder-style game with 50 eco habits — swipe right or left |
-| 🏆 **College Leaderboard** | Inter-college XP rankings with podium display |
+| 🏆 **College Leaderboard** | Inter-college XP rankings with podium display (gold/silver/bronze medals) |
 | 😂 **Meme Factory** | PIL-generated eco memes with 6 templates |
 | 📦 **Eco Score** | Rate 40+ products on environmental impact (1-10 scale) |
 | ♻️ **Waste Classifier** | Classify 50+ waste items with disposal instructions |
-| 🎮 **Full Gamification** | XP, 30 levels, 15 badges, daily streaks |
+| 🎮 **Full Gamification** | XP, 30 levels, 15 badges, daily streaks, level progress |
+| 👤 **User Profile Dashboard** | Beautiful profile page with stats, badges, activity history |
+| 🔐 **Session Persistence** | Stay logged in even after browser refresh |
+
+---
+
+## 🆕 Recent Updates (v2.1)
+
+✅ **Warm Light Theme Redesign** — Switched from dark theme to beautiful warm beige/earth-tone color palette  
+✅ **Session Persistence** — Authentication tokens in URL params ensure users stay logged in on refresh  
+✅ **Profile Page Redesign** — Impressive hero card with level progress, activity summary, and badges display  
+✅ **Enhanced Sidebar** — User info card now shows user ID, level, and XP progress bar  
+✅ **Accent Colors** — Added terracotta, gold, and green accent colors for visual hierarchy  
+✅ **Beautiful Login Page** — Centered card design with smooth tab-based authentication forms  
+✅ **Form Element Styling** — Improved selectbox, input, and label visibility with proper hover states  
+✅ **Feature Card Navigation** — All 8 feature cards now navigate smoothly with proper routing  
 
 ---
 
@@ -128,15 +143,34 @@ python -m unittest tests.test_auth -v
 
 ## 🎨 Design System
 
-- **Background:** Animated gradient mesh with 25 floating particles
-- **Cards:** Glassmorphism with backdrop blur
-- **Fonts:** Plus Jakarta Sans (headings) + DM Sans (body)
-- **Colors:**
-  - Terra Green: `#2ECC71`
-  - Terra Dark: `#0D1F1A`
-  - Terra Sky: `#7EC8E3`
-  - Terra Yellow: `#F4C430`
-  - Terra Accent: `#FF6B35`
+**Theme:** Warm Light Theme (Beige & Earth-tone)
+
+- **Primary Background:** Warm off-white `#FAF7F2`
+- **Secondary Background:** Light beige `#F2EDE4`
+- **Cards:** Pure white `#FFFFFF` with subtle borders
+- **Fonts:** Plus Jakarta Sans (headings) + Inter (body)
+
+### Color Palette
+
+| Color | Hex | Usage |
+|-------|-----|-------|
+| Deep Forest Green | `#3D7A5E` | Primary buttons, active states |
+| Sage Green | `#6BAF8A` | Progress bars, success states |
+| Warm Terracotta | `#C8794A` | Streak badges, 3rd place medals |
+| Warm Gold | `#D4A853` | Level badges, 1st place medals |
+| Silver | `#B0B0B0` | 2nd place medals |
+| Primary Text | `#2C2C2C` | Headings, main content |
+| Secondary Text | `#5C5C5C` | Body text, descriptions |
+| Muted Text | `#9A9A9A` | Tertiary info, hints |
+| Borders | `#E8E0D5` | Card and input borders |
+
+### Key UI Features
+
+- **Beautiful Login/Signup Page:** Centered card design with tab-based forms
+- **Responsive Sidebar:** User profile card with avatar, level, and XP progress
+- **Session Persistence:** Stay logged in even after browser refresh
+- **Impressive Profile Dashboard:** Hero card, activity summary, badges, user info
+- **Accent Colors:** Terracotta, gold, and green accents for visual hierarchy
 
 ---
 
