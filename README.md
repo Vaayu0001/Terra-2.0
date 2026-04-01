@@ -53,12 +53,29 @@ pip install -r requirements.txt
 
 Get a free key at: https://aistudio.google.com
 
-Edit `config.py`:
-```python
-GEMINI_API_KEY = "your-api-key-here"
+Set the environment variable (do NOT add to config.py):
+
+**Windows (PowerShell):**
+```powershell
+$env:GEMINI_API_KEY = "your-api-key-here"
 ```
 
-> **Note:** The app works perfectly without Gemini — it uses funny fallback responses!
+**Windows (Command Prompt):**
+```cmd
+set GEMINI_API_KEY=your-api-key-here
+```
+
+**Linux/Mac:**
+```bash
+export GEMINI_API_KEY="your-api-key-here"
+```
+
+Or create a `.env` file in the project root and add:
+```
+GEMINI_API_KEY=your-api-key-here
+```
+
+> **Note:** The app works perfectly without Gemini — it uses funny fallback responses! Never commit your API key to git.
 
 ### 3. Run the App
 

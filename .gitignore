@@ -32,5 +32,9 @@ Thumbs.db
 # Streamlit
 .streamlit/
 
-# Env
+# Environment and secrets - NEVER commit API keys or credentials
 .env
+.env.local
+.env.*.local
+*.secrets
+

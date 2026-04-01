@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).parent
@@ -8,7 +9,8 @@ REPORTS_DIR.mkdir(exist_ok=True)
 
 APP_NAME = "Terra 2.0"
 APP_TAGLINE = "Your planet needs a glow-up. Start here."
-GEMINI_API_KEY = ""  # Get yours free at https://aistudio.google.com
+# Read from environment variable to prevent accidental exposure of API keys
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 DEFAULT_CITY = "Chennai"
 DEFAULT_LAT = 13.0827
 DEFAULT_LON = 80.2707
