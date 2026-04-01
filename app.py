@@ -40,7 +40,9 @@ def restore_session_from_query_params():
                 st.session_state['xp'] = user_data.get('xp', 0)
                 st.session_state['level'] = user_data.get('level', 1)
                 st.session_state['streak'] = user_data.get('streak', 0)
-                st.session_state['page'] = 'home'
+                # Only set page to home if it's not already set
+                if 'page' not in st.session_state:
+                    st.session_state['page'] = 'home'
         except Exception:
             pass  # If restore fails, show login normally
 
